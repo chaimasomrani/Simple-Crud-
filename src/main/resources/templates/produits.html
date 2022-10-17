@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title> Page Laypu </title>
+<link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">WebSiteName</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a th:href="@{/user/index}">Home</a></li>
+      <li><a th:href="@{/admin/FormProduit}">Produits</a></li>
+      <li><a href="#">Catégorie</a></li>
+      
+    </ul>
+    <ul class="nav navbar-nav pull-right">
+    <li>
+    	<a class="btn btn-danger" th:href="@{/logout}"> Logout </a>
+    </li>
+    </ul>
+  </div>
+</nav>
+</head>
+
+
+<body>
+	
+		<div class="container">
+			<div class="panel panel-primary">
+				<div class="pannel-heading">Liste des produits </div>
+				<div class="pannel-body">
+					<form th:action="@{/user/index}" method="get">
+						<label>
+							Mot Clé: </label>
+						<input type="text" name="motCle" th:value="${motCle}">
+						<button type="submit" class="btn-ptn-prim"> Chercher </button>
+					</form>
+					<table class="table">
+						
+							<tr>
+								<th>ID</th>
+								<th>DESIGNATION</th>
+								<th>PRIX</th>
+								<th>QUANTITE</th>
+							</tr>
+				 	
+						<tbody>
+							<tr th:each="p:${listProduits}">
+								<td th:text="${p.id}"></td>
+								<td th:text="${p.designation}"></td>
+								<td th:text="${p.prix}"></td>
+								<td th:text="${p.quantite}"></td>
+								<td>
+									<a class="btn btn-danger" onclick="confirm('Etes vous sure')"
+										th:href="@{/admin/delete(id=${p.id},page=${currentpage},motCle=${motCle})}"> Delete
+									</a>
+								</td>
+								<td>
+								<a
+										th:href="@{/admin/edit(id=${p.id})}"> Edit
+									</a> </td>
+
+
+
+							</tr>
+							<tdbody>
+					</table>
+					<ul class="nav nav-pills">
+						<li th:class="${currentpage==status.index}?'active':''" th:each="page,status:${page}">
+							<a th:href="@{/user/index(page=${status.index},motCle=${motCle})}" th:text="${status.index}">
+							</a>
+						</li>
+					</ul>
+
+				</div>
+
+			</div>
+		</div>
+	
+
+
+
+
+
+</body>
+
+</html>
